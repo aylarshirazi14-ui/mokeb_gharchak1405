@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700;800&display=swap');
 
 *{
 margin:0;
@@ -8,358 +8,126 @@ font-family:'Vazirmatn',sans-serif;
 }
 
 body{
-
 background:#101010;
 color:white;
-overflow-x:hidden;
-
 }
 
-/* -------------------- */
-
 .hero{
-
 height:55vh;
-
 background:
-linear-gradient(rgba(0,0,0,.70),rgba(0,0,0,.80)),
-url("https://images.unsplash.com/photo-1512632578888-169bbbc64f33?w=1600");
-
+linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,.8)),
+url("banner.jpg");
 background-size:cover;
 background-position:center;
-
 display:flex;
-justify-content:center;
 align-items:center;
-
+justify-content:center;
 text-align:center;
-
 border-bottom:3px solid #d6af36;
-
 }
 
 .overlay{
-
-backdrop-filter:blur(3px);
-
 padding:30px;
-
-}
-
-.logo{
-
-font-size:70px;
-
-margin-bottom:15px;
-
 }
 
 .hero h1{
-
 font-size:40px;
-
 color:#FFD54F;
-
 font-weight:800;
-
-margin-bottom:15px;
-
 }
 
 .hero h2{
-
-font-size:22px;
-
-font-weight:500;
-
-margin-bottom:15px;
-
+margin:15px;
 }
 
 .hero p{
-
-font-size:18px;
-
 color:#ddd;
-
 }
 
-/* -------------------- */
-
 .cards{
-
 display:flex;
-
 justify-content:center;
-
 gap:20px;
-
-flex-wrap:wrap;
-
 padding:35px;
-
+flex-wrap:wrap;
 }
 
 .card{
-
-width:220px;
-
 background:#1d1d1d;
-
+width:220px;
 padding:25px;
-
 border-radius:18px;
-
 text-align:center;
-
-transition:.4s;
-
-border:1px solid rgba(255,255,255,.1);
-
-box-shadow:0 0 25px rgba(0,0,0,.25);
-
-}
-
-.card:hover{
-
-transform:translateY(-8px);
-
-box-shadow:0 0 25px rgba(255,215,0,.35);
-
-}
-
-.card i{
-
-font-size:35px;
-
-color:#FFD54F;
-
-margin-bottom:15px;
-
+border:1px solid #333;
 }
 
 .card h3{
-
-font-size:30px;
-
-margin-bottom:10px;
-
+font-size:32px;
+color:#FFD54F;
 }
 
-.card span{
-
-color:#bbb;
-
-}
-
-/* -------------------- */
-
-.searchBox{
-
+.searchBox,.filters{
 display:flex;
-
 justify-content:center;
-
-margin-bottom:25px;
-
+gap:10px;
+flex-wrap:wrap;
+margin:20px;
 }
 
 #search{
-
 width:90%;
-
 max-width:700px;
-
-padding:18px;
-
+padding:16px;
 border-radius:15px;
-
 border:none;
-
-font-size:18px;
-
 background:#1b1b1b;
-
 color:white;
-
-outline:none;
-
-box-shadow:0 0 20px rgba(255,215,0,.08);
-
+font-size:17px;
 }
 
-#search:focus{
-
-box-shadow:0 0 20px rgba(255,215,0,.35);
-
+.filters button{
+padding:12px 18px;
+border-radius:12px;
+border:none;
+cursor:pointer;
+background:#222;
+color:white;
 }
 
-/* -------------------- */
+.filters button:hover{
+background:#d6af36;
+color:#111;
+}
 
 #map{
-
 width:92%;
-
 height:70vh;
-
 margin:auto;
-
-border-radius:20px;
-
-overflow:hidden;
-
 border:4px solid #d6af36;
-
-box-shadow:0 0 35px rgba(255,215,0,.25);
-
+border-radius:20px;
 }
-
-/* -------------------- */
-
-.leaflet-popup-content{
-
-font-family:Vazirmatn;
-
-text-align:right;
-
-line-height:2;
-
-}
-
-.leaflet-popup-content h3{
-
-color:#0f8c43;
-
-}
-
-.leaflet-popup-content a{
-
-display:block;
-
-margin-top:10px;
-
-background:#0f8c43;
-
-color:white;
-
-padding:10px;
-
-text-align:center;
-
-text-decoration:none;
-
-border-radius:10px;
-
-}
-
-/* -------------------- */
 
 footer{
-
 margin-top:40px;
-
 padding:25px;
-
 text-align:center;
-
 background:#181818;
-
 color:#aaa;
-
-border-top:2px solid #d6af36;
-
+}
+.locBtn{
+background:#1976d2;
+color:white;
+border:none;
+padding:12px 20px;
+border-radius:12px;
+font-size:16px;
+cursor:pointer;
+margin:10px;
 }
 
-/* -------------------- */
-
-::-webkit-scrollbar{
-
-width:10px;
-
-}
-
-::-webkit-scrollbar-thumb{
-
-background:#d6af36;
-
-border-radius:20px;
-
-}
-
-::-webkit-scrollbar-track{
-
-background:#111;
-
-}
-
-/* -------------------- */
-
-@media(max-width:900px){
-
-.hero{
-
-height:45vh;
-
-}
-
-.hero h1{
-
-font-size:28px;
-
-}
-
-.hero h2{
-
+#distanceInfo{
 font-size:18px;
-
-}
-
-.card{
-
-width:90%;
-
-}
-
-#map{
-
-height:60vh;
-
-}
-
-}
-
-@media(max-width:600px){
-
-.logo{
-
-font-size:50px;
-
-}
-
-.hero h1{
-
-font-size:23px;
-
-}
-
-.hero h2{
-
-font-size:16px;
-
-}
-
-.hero p{
-
-font-size:14px;
-
-}
-
-#search{
-
-font-size:16px;
-
-padding:15px;
-
-}
-
+font-weight:bold;
+margin:10px;
+text-align:center;
 }
