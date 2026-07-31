@@ -1,204 +1,197 @@
-// ===============================
-// ساخت نقشه
-// ===============================
+const map = L.map('map').setView([35.52198, 51.49887], 12);
 
-const map = L.map("map").setView([35.4305, 51.5705], 13);
-
-L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    maxZoom: 19,
-    attribution: "© OpenStreetMap"
-}).addTo(map);
-
-
-// ===============================
-// اطلاعات موکب ها
-// ===============================
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
 const mokebs = [
-
 {
-name:"موکب امام حسن مجتبی (ع)",
-lat:35.420,
-lng:51.565,
-address:"قرچک - ابتدای مسیر",
-services:"🍲 غذا<br>☕ چای<br>🚻 سرویس بهداشتی"
+name:'هیئت امیرالمومنین ع',
+type:'پذیرایی',
+address:'مسیر پیاده روی جاماندگان اربعین',
+services:'ظرفیت ۲۰۰۰ نفر'
 },
-
 {
-name:"موکب حضرت زینب (س)",
-lat:35.426,
-lng:51.571,
-address:"بلوار امام رضا",
-services:"💧 آب معدنی<br>🍵 چای<br>🛏 استراحت"
+name:'گروه جهادی شهید بقرایی',
+type:'پذیرایی',
+address:'مسیر پیاده روی جاماندگان اربعین',
+services:'پذیرایی'
 },
-
 {
-name:"موکب شهدای قرچک",
-lat:35.432,
-lng:51.578,
-address:"سه راه کارخانه",
-services:"🍲 غذا<br>🚑 درمان"
+name:'حوزه امام حسین ع',
+type:'خدماتی',
+address:'مسیر پیاده روی جاماندگان اربعین',
+services:'خدماتی'
 },
-
 {
-name:"موکب حضرت رقیه (س)",
-lat:35.439,
-lng:51.585,
-address:"جاده قدیم ری",
-services:"☕ چای<br>🥤 شربت"
+name:'گروه جهادی شهید کیوان تاجیک',
+type:'پذیرایی',
+address:'مسیر پیاده روی جاماندگان اربعین',
+services:'پذیرایی'
 },
-
 {
-name:"موکب حضرت ابوالفضل (ع)",
-lat:35.446,
-lng:51.592,
-address:"ورودی شهرری",
-services:"🍲 غذا<br>🛏 استراحت<br>🚑 درمان"
+name:'محبین الائمه',
+type:'پذیرایی',
+address:'مسیر پیاده روی جاماندگان اربعین',
+services:'ظرفیت ۵۰۰۰ نفر'
+},
+{
+name:'خیریه حضرت زینب س',
+type:'پذیرایی',
+address:'مسیر پیاده روی جاماندگان اربعین',
+services:'پذیرایی'
+},
+{
+name:'هیئت اباعبدالله الحسین',
+type:'پذیرایی',
+address:'نزدیک حرم',
+services:'ظرفیت ۲۰۰۰۰ نفر'
+}
+];
+
+let markers = [];
+
+function color(t){
+if(t==='فرهنگی') return '#2196f3';
+if(t==='پذیرایی') return '#22c55e';
+if(t==='خدماتی') return '#ff9800';
+return '#ef4444';
 }
 
-];
+function show(data){
 
+markers.forEach(m=>map.removeLayer(m));
+markers=[];
 
-// ===============================
-// آیکون اختصاصی
-// ===============================
+data.forEach(x=>{
 
-const markerIcon = L.icon({
+let icon=L.divIcon({
+html:`
+<div style="
+position:relative;
+width:28px;
+height:28px;
+background:${color(x.type)};
+border-radius:50% 50% 50% 0;
+transform:rotate(-45deg);
+border:2px solid white;
+box-shadow:0 3px 8px rgba(0,0,0,.35);
+">
+<div style="
+position:absolute;
+top:50%;
+left:50%;
+width:10px;
+height:10px;
+background:white;
+border-radius:50%;
+transform:translate(-50%,-50%) rotate(45deg);
+"></div>
+</div>
+`,
+className:'',
+iconSize:[28,28],
+iconAnchor:[14,28],
+popupAnchor:[0,-28]
+});
 
-iconUrl:
-"https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png",
+let m=L.marker([x.lat,x.lng],{icon}).addTo(map);
 
-shadowUrl:
-"https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+m.bindPopup(`
+<h3>${x.name}</h3>
+<p>📍 ${x.address}</p>
+<p>🏷️ ${x.type}</p>
+<p>🍵 ${x.services}</p>
+`);
 
-iconSize:[25,41],
-iconAnchor:[12,41]
+markers.push(m);
 
 });
 
+document.getElementById('mokebCount').innerText=data.length;
+}
 
-// ===============================
-// نمایش موکب ها
-// ===============================
+function filterMokeb(t){
+show(t==='all'?mokebs:mokebs.filter(x=>x.type===t));
+}
 
-mokebs.forEach(item=>{
+document.getElementById('search').oninput=function(){
+show(mokebs.filter(x=>x.name.includes(this.value)));
+}
 
-L.marker([item.lat,item.lng],{icon:markerIcon})
+const start = [35.44054, 51.57129];
+const destination = [35.60342, 51.42645];
 
-.addTo(map)
+L.marker(start).addTo(map).bindPopup("📍 مبدا");
+L.marker(destination).addTo(map).bindPopup("🏁 مقصد");
 
-.bindPopup(
+fetch(`https://router.project-osrm.org/route/v1/driving/${start[1]},${start[0]};${destination[1]},${destination[0]}?overview=full&geometries=geojson`)
+.then(res => res.json())
+.then(data => {
 
-`
-<h3>${item.name}</h3>
+const route = data.routes[0].geometry.coordinates.map(c => [
+c[1],
+c[0]
+]);
 
-<b>📍 آدرس:</b><br>
-
-${item.address}
-
-<br><br>
-
-<b>خدمات:</b><br>
-
-${item.services}
-
-<br><br>
-
-<a target="_blank"
-
-href="https://www.google.com/maps/dir/?api=1&destination=${item.lat},${item.lng}">
-
-🚗 مسیریابی
-
-</a>
-
-`
-
-);
-
-});
-
-
-// ===============================
-// نمایش مسیر نمونه
-// ===============================
-
-const line = [
-
-[35.420,51.565],
-
-[35.426,51.571],
-
-[35.432,51.578],
-
-[35.439,51.585],
-
-[35.446,51.592]
-
-];
-
-L.polyline(line,{
-
-color:"#FFD700",
-
-weight:6,
-
-opacity:.8
-
+L.polyline(route,{
+color:"#1976d2",
+weight:6
 }).addTo(map);
 
+const positions = [0.08,0.20,0.34,0.48,0.62,0.78,0.92];
 
-// ===============================
-// موقعیت کاربر
-// ===============================
+mokebs.forEach((m,index)=>{
 
-if(navigator.geolocation){
+const point = route[Math.floor(route.length * positions[index])];
+
+// جابجایی خیلی کم کنار مسیر
+const offsetLat = (index % 2 === 0 ? 1 : -1) * 0.0007;
+const offsetLng = (index % 2 === 0 ? -1 : 1) * 0.0007;
+
+m.lat = point[0] + offsetLat;
+m.lng = point[1] + offsetLng;
+
+});
+
+show(mokebs);
+
+map.fitBounds(route);
+
+});
+
+map.fitBounds([start,destination],{
+padding:[40,40]
+});
+function showMyLocation(){
+
+if(!navigator.geolocation){
+alert("موقعیت مکانی پشتیبانی نمی‌شود");
+return;
+}
 
 navigator.geolocation.getCurrentPosition(function(position){
 
 const lat = position.coords.latitude;
-
 const lng = position.coords.longitude;
 
-L.circleMarker([lat,lng],{
-
-radius:8,
-
-color:"blue",
-
-fillColor:"blue",
-
-fillOpacity:1
-
-})
-
+L.marker([lat,lng])
 .addTo(map)
+.bindPopup("📍 شما اینجا هستید")
+.openPopup();
 
-.bindPopup("📍 موقعیت شما");
+map.setView([lat,lng],15);
 
+const distance = map.distance(
+[lat,lng],
+destination
+);
+
+const km = (distance / 1000).toFixed(1);
+
+document.getElementById("distanceInfo").innerHTML =
+`🏁 فاصله تا حرم: <b>${km} کیلومتر</b>`;
+
+},function(){
+alert("دسترسی به موقعیت مکانی داده نشد");
 });
 
 }
-
-
-// ===============================
-// جستجو
-// ===============================
-
-const search = document.getElementById("search");
-
-search.addEventListener("keyup",function(){
-
-const text = this.value.trim();
-
-mokebs.forEach(item=>{
-
-if(item.name.includes(text)){
-
-map.setView([item.lat,item.lng],16);
-
-}
-
-});
-
-});
